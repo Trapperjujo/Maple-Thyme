@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- CASL Newsletter Form Submission ---
+    // --- CASL Newsletter Form Submission (Formspree) ---
     const newsletterForm = document.getElementById('newsletter-form');
     if (newsletterForm) {
         const formMsg = document.getElementById('form-msg');
-        newsletterForm.addEventListener('submit', (e) => {
+        newsletterForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const consentCheckbox = document.getElementById('casl-consent');
             
@@ -42,14 +42,31 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Subscribing...';
             submitBtn.disabled = true;
 
-            setTimeout(() => {
-                formMsg.textContent = "Successfully subscribed! You can opt-out at any time.";
-                formMsg.style.color = "var(--color-pine)";
+            try {
+                const response = await fetch(e.target.action, {
+                    method: 'POST',
+                    body: new FormData(newsletterForm),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    formMsg.textContent = "Successfully subscribed! You can opt-out at any time.";
+                    formMsg.style.color = "var(--color-pine)";
+                    formMsg.classList.remove('hidden');
+                    newsletterForm.reset();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            } catch (error) {
+                formMsg.textContent = "Oops! There was a problem submitting your email.";
+                formMsg.style.color = "var(--color-primary)";
                 formMsg.classList.remove('hidden');
-                newsletterForm.reset();
+            } finally {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
-            }, 1200);
+            }
         });
     }
 
