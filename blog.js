@@ -99,33 +99,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if(bodyEl) {
             // Setup Amazon Affiliate Auto-Linker
             const affiliateTag = "maplethyme-20";
-            const keywords = [
-                "maple syrup", "syrup", "butter tart", "baking sheet", "whisk", 
-                "mixing bowl", "dutch oven", "cast iron", "vanilla extract",
-                "whiskey", "dijon mustard", "measuring cups"
-            ];
+            const keywords = {
+                "maple syrup": "https://amzn.to/46XvRd2",
+                "syrup": "https://amzn.to/46XvRd2",
+                "butter tart": null, "baking sheet": null, "whisk": null, 
+                "mixing bowl": null, "dutch oven": null, "cast iron": null, 
+                "vanilla extract": null, "whiskey": null, "dijon mustard": null, 
+                "measuring cups": null
+            };
 
             let htmlContent = post.content;
-            const seen = new Set();
             
             // Sort keywords by length descending so "maple syrup" evaluates before "syrup"
-            const sortedKeywords = keywords.slice().sort((a, b) => b.length - a.length);
+            const sortedKeywords = Object.keys(keywords).sort((a, b) => b.length - a.length);
             
             // Escape keywords for regex and join
             const escapedKeywords = sortedKeywords.map(kw => kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
             // Match HTML tags OR word-bounded keywords. This avoids matching text inside HTML attributes safely without lookbehinds.
-            const pattern = new RegExp(`(<[^>]+>)|\\\\b(${escapedKeywords.join("|")})\\\\b`, 'gi');
+            const pattern = new RegExp(`(<[^>]+>)|\\b(${escapedKeywords.join("|")})\\b`, 'gi');
 
             htmlContent = htmlContent.replace(pattern, (match, tag, keywordGroup) => {
                 // If we matched an HTML tag, leave it completely untouched
                 if (tag) return tag;
                 
-                // Track seen keywords (case-insensitive) to only link the first occurrence
                 const lowerKw = keywordGroup.toLowerCase();
-                if (seen.has(lowerKw)) return keywordGroup;
-                seen.add(lowerKw);
+                const customUrl = keywords[lowerKw];
+                const affiliateUrl = customUrl ? customUrl : `https://www.amazon.ca/s?k=${encodeURIComponent(lowerKw)}&tag=${affiliateTag}`;
                 
-                const affiliateUrl = `https://www.amazon.ca/s?k=${encodeURIComponent(lowerKw)}&tag=${affiliateTag}`;
                 return `<a href="${affiliateUrl}" target="_blank" rel="noopener sponsored" class="affiliate-link">${keywordGroup}</a>`;
             });
 
