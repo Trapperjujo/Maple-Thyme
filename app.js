@@ -26,47 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const newsletterForm = document.getElementById('newsletter-form');
     if (newsletterForm) {
         const formMsg = document.getElementById('form-msg');
-        newsletterForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        newsletterForm.addEventListener('submit', (e) => {
             const consentCheckbox = document.getElementById('casl-consent');
             
             if (!consentCheckbox.checked) {
+                e.preventDefault(); // Only prevent default if they didn't check the box
                 formMsg.textContent = "You must explicitly consent to receive emails under CASL regulations.";
                 formMsg.style.color = "var(--color-primary)";
                 formMsg.classList.remove('hidden');
                 return;
             }
 
+            // If checked, allow the form to submit naturally to Formspree's action URL.
             const submitBtn = newsletterForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Subscribing...';
-            submitBtn.disabled = true;
-
-            try {
-                const response = await fetch(e.target.action, {
-                    method: 'POST',
-                    body: new FormData(newsletterForm),
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    formMsg.textContent = "Successfully subscribed! You can opt-out at any time.";
-                    formMsg.style.color = "var(--color-pine)";
-                    formMsg.classList.remove('hidden');
-                    newsletterForm.reset();
-                } else {
-                    throw new Error('Network response was not ok.');
-                }
-            } catch (error) {
-                formMsg.textContent = "Oops! There was a problem submitting your email.";
-                formMsg.style.color = "var(--color-primary)";
-                formMsg.classList.remove('hidden');
-            } finally {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
+            submitBtn.textContent = 'Redirecting...';
         });
     }
 
