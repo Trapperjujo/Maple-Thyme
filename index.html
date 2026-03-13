@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maple & Thyme | Authentic Canadian Recipes</title>
+    <meta name="description" content="Discover automated, delicious Canadian recipes. Fully compliant with PIPEDA, CASL, and Health Canada guidelines.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- PIPEDA Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-desc">
+        <div class="cookie-content">
+            <h3 id="cookie-title">We Value Your Privacy (PIPEDA Compliance)</h3>
+            <p id="cookie-desc">We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies according to Canadian PIPEDA standards. <br><a href="privacy.html">Read Privacy Policy</a></p>
+        </div>
+        <div class="cookie-actions">
+            <button id="accept-cookies" class="btn btn-primary">Accept All</button>
+            <button id="decline-cookies" class="btn btn-secondary">Decline Optional</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="main-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🍁</span> Maple & Thyme
+            </a>
+            <nav aria-label="Main Navigation">
+                <ul class="nav-links">
+                    <li><a href="index.html" aria-current="page">Home</a></li>
+                    <li><a href="#featured">Recipes</a></li>
+                    <li><a href="#newsletter">Subscribe</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero" aria-label="Featured Recipe">
+            <div class="hero-bg" id="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <span class="badge">Recipe of the Day</span>
+                <h1 id="hero-title" class="skeleton-text">Loading deliciousness...</h1>
+                <p id="hero-desc" class="skeleton-text skeleton-desc"></p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="document.getElementById('recipe-details').scrollIntoView({behavior: 'smooth'})">
+                        View Recipe
+                    </button>
+                    <button class="btn btn-glass" id="refresh-recipe">
+                        🔄 Shuffle Recipe
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recipe Details Section -->
+        <section id="recipe-details" class="recipe-section container">
+            <div class="recipe-grid">
+                <div class="recipe-image-container">
+                    <img id="recipe-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Recipe Image Placeholder" class="recipe-img skeleton">
+                </div>
+                
+                <div class="recipe-info">
+                    <h2 id="recipe-name" class="skeleton-text">Recipe Name</h2>
+                    
+                    <!-- Health Canada Disclaimer -->
+                    <div class="health-disclaimer alert-warning" role="alert">
+                        <strong>Health & Allergy Warning:</strong> Nutritional information is estimated. Always check ingredient labels for allergens. This information does not substitute professional medical or dietary advice.
+                    </div>
+
+                    <div class="ingredients-box">
+                        <h3>Ingredients</h3>
+                        <ul id="ingredients-list" class="ingredients-list">
+                            <li>Loading...</li>
+                        </ul>
+                    </div>
+
+                    <div class="instructions-box">
+                        <h3>Instructions</h3>
+                        <div id="instructions-text">
+                            <p>Loading steps...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section (CASL Compliant) -->
+        <section id="newsletter" class="newsletter-section">
+            <div class="container newsletter-container">
+                <div class="newsletter-text">
+                    <h2>Get Fresh Canadian Recipes</h2>
+                    <p>Join our mailing list to receive automated weekly recipe drops.</p>
+                </div>
+                <!-- CASL Requires UNCHECKED opt-in -->
+                <form id="newsletter-form" class="newsletter-form" aria-label="Newsletter Subscription">
+                    <div class="input-group">
+                        <input type="email" id="email" required placeholder="Enter your email address" aria-label="Email address">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </div>
+                    <div class="casl-checkbox">
+                        <input type="checkbox" id="casl-consent" required>
+                        <label for="casl-consent">
+                            I explicitly consent to receive commercial electronic messages (weekly recipes) from Maple & Thyme. I understand I can unsubscribe at any time. (CASL Requirement)
+                        </label>
+                    </div>
+                    <div id="form-msg" class="form-msg hidden"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- CASL & Legal Compliant Footer -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h3>🍁 Maple & Thyme</h3>
+                <p>Curated automatically using the public TheMealDB API. Demonstrating compliance with Canadian web laws.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Legal & Compliance</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy (PIPEDA)</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="disclaimer.html">Health Disclaimer</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact & CASL Info</h4>
+                <address>
+                    <strong>Business Address:</strong><br>
+                    [Placeholder Address]<br>
+                    Toronto, ON M5V 3L9<br>
+                    Canada
+                </address>
+                <p><a href="mailto:hello@mapleandthyme.ca">hello@mapleandthyme.ca</a></p>
+                <p class="unsubscribe-note">To withdraw consent, click "Unsubscribe" in any email.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Maple & Thyme. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
