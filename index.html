@@ -34,73 +34,94 @@
             <nav aria-label="Main Navigation">
                 <ul class="nav-links">
                     <li><a href="index.html" aria-current="page">Home</a></li>
-                    <li><a href="#featured">Recipes</a></li>
+                    <li><a href="index.html#latest-recipes">Recipes</a></li>
                     <li><a href="#newsletter">Subscribe</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <main>
-        <section class="hero" aria-label="Featured Recipe">
-            <div class="hero-bg" id="hero-bg"></div>
-            <div class="hero-overlay"></div>
-            <div class="container hero-content">
-                <span class="badge">Recipe of the Day</span>
-                <h1 id="hero-title" class="skeleton-text">Loading deliciousness...</h1>
-                <p id="hero-desc" class="skeleton-text skeleton-desc"></p>
-                <div class="hero-actions">
-                    <button class="btn btn-primary" onclick="document.getElementById('recipe-details').scrollIntoView({behavior: 'smooth'})">
-                        View Recipe
-                    </button>
-                    <button class="btn btn-glass" id="refresh-recipe">
-                        🔄 Shuffle Recipe
-                    </button>
+        <!-- ================= HOME VIEW ================= -->
+        <div id="home-view" class="hidden">
+            <!-- Hero Section / Featured Recipe -->
+            <section class="hero" aria-label="Featured Recipe">
+                <div class="hero-bg" id="hero-bg"></div>
+                <div class="hero-overlay"></div>
+                <div class="container hero-content">
+                    <span class="badge">Featured Recipe</span>
+                    <h1 id="hero-title" class="skeleton-text">Loading deliciousness...</h1>
+                    <p id="hero-desc" class="skeleton-text skeleton-desc"></p>
+                    <div class="hero-actions">
+                        <a id="hero-link" href="#" class="btn btn-primary">View Recipe</a>
+                    </div>
                 </div>
+            </section>
+
+            <!-- Latest Recipes Grid -->
+            <section id="latest-recipes" class="latest-recipes container">
+                <div class="section-header">
+                    <h2>Latest Recipes</h2>
+                    <p>Discover our freshest Canadian culinary delights, updated daily.</p>
+                </div>
+                <div class="recipe-grid-cards" id="recipe-grid">
+                    <!-- Recipe Cards Injected via JS -->
+                    <div class="recipe-card skeleton-card"></div>
+                    <div class="recipe-card skeleton-card"></div>
+                    <div class="recipe-card skeleton-card"></div>
+                    <div class="recipe-card skeleton-card"></div>
+                    <div class="recipe-card skeleton-card"></div>
+                    <div class="recipe-card skeleton-card"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= RECIPE DETAIL VIEW ================= -->
+        <div id="recipe-view" class="hidden">
+            <div class="container breadcrumb">
+                <a href="index.html" class="btn btn-secondary">← Back to Home</a>
             </div>
-        </section>
-
-        <!-- Recipe Details Section -->
-        <section id="recipe-details" class="recipe-section container">
-            <div class="recipe-grid">
-                <div class="recipe-image-container">
-                    <img id="recipe-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Recipe Image Placeholder" class="recipe-img skeleton">
+            <section id="recipe-details" class="recipe-section container">
+                <div class="recipe-details-header">
+                    <h1 id="recipe-name" class="skeleton-text display-title">Recipe Name</h1>
                 </div>
-                
-                <div class="recipe-info">
-                    <h2 id="recipe-name" class="skeleton-text">Recipe Name</h2>
+
+                <div class="recipe-grid">
+                    <div class="recipe-image-container">
+                        <img id="recipe-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Recipe Image Placeholder" class="recipe-img skeleton">
+                    </div>
                     
-                    <!-- Health Canada Disclaimer -->
-                    <div class="health-disclaimer alert-warning" role="alert">
-                        <strong>Health & Allergy Warning:</strong> Nutritional information is estimated. Always check ingredient labels for allergens. This information does not substitute professional medical or dietary advice.
-                    </div>
+                    <div class="recipe-info">
+                        <!-- Health Canada Disclaimer -->
+                        <div class="health-disclaimer alert-warning" role="alert">
+                            <strong>Health & Allergy Warning:</strong> Nutritional information is estimated. Always check ingredient labels for allergens. This information does not substitute professional medical or dietary advice.
+                        </div>
 
-                    <div class="ingredients-box">
-                        <h3>Ingredients</h3>
-                        <ul id="ingredients-list" class="ingredients-list">
-                            <li>Loading...</li>
-                        </ul>
-                    </div>
+                        <div class="ingredients-box">
+                            <h3>Ingredients</h3>
+                            <ul id="ingredients-list" class="ingredients-list">
+                                <li>Loading...</li>
+                            </ul>
+                        </div>
 
-                    <div class="instructions-box">
-                        <h3>Instructions</h3>
-                        <div id="instructions-text">
-                            <p>Loading steps...</p>
+                        <div class="instructions-box">
+                            <h3>Instructions</h3>
+                            <div id="instructions-text">
+                                <p>Loading steps...</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Newsletter Section (CASL Compliant) -->
+        <!-- ================= NEWSLETTER ================= -->
         <section id="newsletter" class="newsletter-section">
             <div class="container newsletter-container">
                 <div class="newsletter-text">
                     <h2>Get Fresh Canadian Recipes</h2>
                     <p>Join our mailing list to receive automated weekly recipe drops.</p>
                 </div>
-                <!-- CASL Requires UNCHECKED opt-in -->
                 <form id="newsletter-form" class="newsletter-form" aria-label="Newsletter Subscription">
                     <div class="input-group">
                         <input type="email" id="email" required placeholder="Enter your email address" aria-label="Email address">
