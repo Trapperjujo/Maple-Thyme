@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeView = document.getElementById('home-view');
     const recipeView = document.getElementById('recipe-view');
 
+    // Global store for instantaneous searching and filtering
+    let globalMealCatalog = [];
+    let currentFilteredMeals = [];
+
     async function initRouter() {
         const urlParams = new URLSearchParams(window.location.search);
         const recipeId = urlParams.get('id');
@@ -76,6 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (allMeals.length === 0) return;
 
+            // Store globally for Search/Filter
+            globalMealCatalog = allMeals;
+
             // --- Deterministic Daily Rotator (Date-Seeded PRNG) ---
             // Generates a seed based strictly on the calendar day to ensure it rotates exactly at midnight
             const today = new Date();
@@ -100,8 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
             populateHero(featuredMeal);
 
             // Populate Grid with the subsequent items
-            const gridMeals = shuffledMeals.slice(1, 10);
-            populateGrid(gridMeals);
+            currentFilteredMeals = shuffledMeals.slice(1);
+            // Only show up to 30 items initially to prevent DOM overload
+            populateGrid(currentFilteredMeals.slice(0, 30));
+
+            // Attach Search and Filter Event Listeners
+            initSearchAndFilter();
 
         } catch (error) {
             console.error("Error fetching homepage recipes:", error);
@@ -170,6 +181,51 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.appendChild(card);
             counter++;
         });
+    }
+
+    // --- Search & Filter Logic ---
+    function initSearchAndFilter() {
+        const searchInput = document.getElementById('recipe-search');
+        const categorySelect = document.getElementById('recipe-category');
+
+        if (!searchInput || !categorySelect) return;
+
+        function applyFilters() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const categoryValue = categorySelect.value; // E.g., 'All', 'Canadian', 'Dessert'
+
+            const results = currentFilteredMeals.filter(meal => {
+                // 1. Text Search (Matches Recipe Title)
+                const matchesSearch = meal.strMeal.toLowerCase().includes(searchTerm);
+
+                // 2. Category Filter
+                let matchesCategory = true;
+                if (categoryValue !== 'All') {
+                    if (categoryValue === 'Canadian') {
+                        matchesCategory = (meal.strArea === 'Canadian');
+                    } else if (categoryValue === 'Sandwich') {
+                        matchesCategory = (meal.strTags && meal.strTags.includes('Sandwich'));
+                    } else {
+                        // Matches exact category like Dessert, Beef, Seafood
+                        matchesCategory = (meal.strCategory === categoryValue);
+                    }
+                }
+
+                return matchesSearch && matchesCategory;
+            });
+
+            // Re-render the grid with the filtered results (limit to 30 for performance)
+            populateGrid(results.slice(0, 30));
+            
+            // Show a "no results" message if empty
+            if (results.length === 0) {
+                const grid = document.getElementById('recipe-grid');
+                grid.innerHTML = '<p class="error-msg" style="grid-column: 1/-1; text-align: center; color: var(--color-text-light);">No recipes found matching your criteria. Try adjusting your search.</p>';
+            }
+        }
+
+        searchInput.addEventListener('input', applyFilters);
+        categorySelect.addEventListener('change', applyFilters);
     }
 
     // 2. Single Recipe Rendering

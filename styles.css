@@ -170,6 +170,43 @@ a:hover {
     color: var(--color-primary);
 }
 
+/* --- SEARCH & CATEGORY FILTER --- */
+.controls-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.control-input, .control-select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: var(--radius-sm);
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    transition: var(--transition-fast);
+}
+
+.control-input {
+    flex: 1;
+    min-width: 250px;
+    max-width: 500px;
+}
+
+.control-select {
+    flex-basis: 200px;
+    cursor: pointer;
+}
+
+.control-input:focus, .control-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(189, 42, 46, 0.1);
+}
+
 /* --- ADVERTISEMENT PLACEHOLDERS --- */
 .ad-container {
     width: 100%;

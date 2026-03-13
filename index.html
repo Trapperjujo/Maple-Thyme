@@ -78,8 +78,23 @@
             <section id="latest-recipes" class="latest-recipes container">
                 <div class="section-header">
                     <h2>Latest Recipes</h2>
-                    <p>Discover our freshest Canadian culinary delights, updated daily.</p>
+                    <p>Discover our freshest culinary delights, updated daily.</p>
                 </div>
+
+                <!-- Search & Filter Controls -->
+                <div class="controls-bar">
+                    <input type="text" id="recipe-search" class="control-input" placeholder="Search recipes by name or ingredient..." aria-label="Search recipes">
+                    <select id="recipe-category" class="control-select" aria-label="Filter by category">
+                        <option value="All">All Categories</option>
+                        <option value="Canadian">Authentic Canadian</option>
+                        <option value="Dessert">Desserts</option>
+                        <option value="Beef">Dinners (Beef & Meat)</option>
+                        <option value="Seafood">Seafood</option>
+                        <option value="Side">Sides & Sauces</option>
+                        <option value="Sandwich">Sandwiches & Wraps</option>
+                    </select>
+                </div>
+
                 <div class="recipe-grid-cards" id="recipe-grid">
                     <!-- Recipe Cards Injected via JS -->
                     <div class="recipe-card skeleton-card"></div>
