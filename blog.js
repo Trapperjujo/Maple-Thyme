@@ -97,8 +97,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if(bodyEl) {
-            // Render raw HTML from JSON
-            bodyEl.innerHTML = post.content;
+            // Setup Amazon Affiliate Auto-Linker
+            const affiliateTag = "maplethyme-20";
+            const keywords = [
+                "maple syrup", "butter tart", "baking sheet", "whisk", 
+                "mixing bowl", "dutch oven", "cast iron", "vanilla extract",
+                "whiskey", "dijon mustard", "measuring cups"
+            ];
+
+            let htmlContent = post.content;
+
+            // Iterate through our keyword dictionary and replace the first instance of each
+            keywords.forEach(keyword => {
+                // Regex to match the keyword cleanly (case-insensitive, whole word, not already in a link)
+                // This prevents breaking existing HTML tags or linking inside an existing <a> tag.
+                const regex = new RegExp(`(?<!<[^>]*)(\\b${keyword}\\b)(?![^<]*>)`, 'i');
+                
+                const affiliateUrl = `https://www.amazon.ca/s?k=${encodeURIComponent(keyword)}&tag=${affiliateTag}`;
+                const replacement = `<a href="${affiliateUrl}" target="_blank" rel="noopener sponsored" class="affiliate-link">$&</a>`;
+                
+                htmlContent = htmlContent.replace(regex, replacement);
+            });
+
+            // Render auto-linked HTML
+            bodyEl.innerHTML = htmlContent;
         }
     }
 
