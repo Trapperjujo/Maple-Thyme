@@ -106,17 +106,27 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
 
             let htmlContent = post.content;
+            const seen = new Set();
+            
+            // Sort keywords by length descending so "maple syrup" evaluates before "syrup"
+            const sortedKeywords = keywords.slice().sort((a, b) => b.length - a.length);
+            
+            // Escape keywords for regex and join
+            const escapedKeywords = sortedKeywords.map(kw => kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+            // Match HTML tags OR word-bounded keywords. This avoids matching text inside HTML attributes safely without lookbehinds.
+            const pattern = new RegExp(`(<[^>]+>)|\\\\b(${escapedKeywords.join("|")})\\\\b`, 'gi');
 
-            // Iterate through our keyword dictionary and replace the first instance of each
-            keywords.forEach(keyword => {
-                // Regex to match the keyword cleanly (case-insensitive, whole word, not already in a link)
-                // This prevents breaking existing HTML tags or linking inside an existing <a> tag.
-                const regex = new RegExp(`(?<!<[^>]*)(\\b${keyword}\\b)(?![^<]*>)`, 'i');
+            htmlContent = htmlContent.replace(pattern, (match, tag, keywordGroup) => {
+                // If we matched an HTML tag, leave it completely untouched
+                if (tag) return tag;
                 
-                const affiliateUrl = `https://www.amazon.ca/s?k=${encodeURIComponent(keyword)}&tag=${affiliateTag}`;
-                const replacement = `<a href="${affiliateUrl}" target="_blank" rel="noopener sponsored" class="affiliate-link">$&</a>`;
+                // Track seen keywords (case-insensitive) to only link the first occurrence
+                const lowerKw = keywordGroup.toLowerCase();
+                if (seen.has(lowerKw)) return keywordGroup;
+                seen.add(lowerKw);
                 
-                htmlContent = htmlContent.replace(regex, replacement);
+                const affiliateUrl = `https://www.amazon.ca/s?k=${encodeURIComponent(lowerKw)}&tag=${affiliateTag}`;
+                return `<a href="${affiliateUrl}" target="_blank" rel="noopener sponsored" class="affiliate-link">${keywordGroup}</a>`;
             });
 
             // Render auto-linked HTML
