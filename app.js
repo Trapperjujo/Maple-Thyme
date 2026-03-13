@@ -22,28 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- CASL Newsletter Form Submission (Formspree) ---
-    const newsletterForm = document.getElementById('newsletter-form');
-    if (newsletterForm) {
-        const formMsg = document.getElementById('form-msg');
-        newsletterForm.addEventListener('submit', (e) => {
-            const consentCheckbox = document.getElementById('casl-consent');
-            
-            // If they didn't check the CASL box, stop submission and show error
-            if (!consentCheckbox.checked) {
-                e.preventDefault(); 
-                formMsg.textContent = "You must explicitly consent to receive emails under CASL regulations.";
-                formMsg.style.color = "var(--color-primary)";
-                formMsg.classList.remove('hidden');
-                return;
-            }
-
-            // Otherwise, we do NOT call preventDefault(), allowing the browser to natively 
-            // POST to the Formspree action="https..." URL defined in the HTML form.
-            const submitBtn = newsletterForm.querySelector('button[type="submit"]');
-            submitBtn.textContent = 'Redirecting...';
-        });
-    }
+    // Note: The CASL Newsletter Form is now handled 100% natively by HTML5 and Formspree 
+    // to prevent any Javascript event propagation conflicts. (See index.html)
 
     // --- Automated Recipe Fetching & Routing ---
     const API_FILTER_CANADIAN = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian';
