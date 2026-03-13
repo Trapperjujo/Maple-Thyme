@@ -29,15 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
         newsletterForm.addEventListener('submit', (e) => {
             const consentCheckbox = document.getElementById('casl-consent');
             
+            // If they didn't check the CASL box, stop submission and show error
             if (!consentCheckbox.checked) {
-                e.preventDefault(); // Only prevent default if they didn't check the box
+                e.preventDefault(); 
                 formMsg.textContent = "You must explicitly consent to receive emails under CASL regulations.";
                 formMsg.style.color = "var(--color-primary)";
                 formMsg.classList.remove('hidden');
                 return;
             }
 
-            // If checked, allow the form to submit naturally to Formspree's action URL.
+            // Otherwise, we do NOT call preventDefault(), allowing the browser to natively 
+            // POST to the Formspree action="https..." URL defined in the HTML form.
             const submitBtn = newsletterForm.querySelector('button[type="submit"]');
             submitBtn.textContent = 'Redirecting...';
         });
