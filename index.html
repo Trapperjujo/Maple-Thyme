@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maple & Thyme | Authentic Canadian Recipes</title>
-    <meta name="description" content="Discover automated, delicious Canadian recipes. Fully compliant with PIPEDA, CASL, and Health Canada guidelines.">
+    <meta name="description"
+        content="Discover automated, delicious Canadian recipes. Fully compliant with PIPEDA, CASL, and Health Canada guidelines.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!-- Google AdSense Verification Tag -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1895034733298752" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1895034733298752"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
 
     <!-- PIPEDA Cookie Consent Banner -->
-    <div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-desc">
+    <div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-labelledby="cookie-title"
+        aria-describedby="cookie-desc">
         <div class="cookie-content">
             <h3 id="cookie-title">We Value Your Privacy (PIPEDA Compliance)</h3>
-            <p id="cookie-desc">We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies according to Canadian PIPEDA standards. <br><a href="privacy.html">Read Privacy Policy</a></p>
+            <p id="cookie-desc">We use cookies to enhance your browsing experience, serve personalized ads or content,
+                and analyze our traffic. By clicking "Accept All", you consent to our use of cookies according to
+                Canadian PIPEDA standards. <br><a href="privacy.html">Read Privacy Policy</a></p>
         </div>
         <div class="cookie-actions">
             <button id="accept-cookies" class="btn btn-primary">Accept All</button>
@@ -68,10 +77,11 @@
                     </div>
                 </div>
             </section>
-            
+
             <!-- Affiliate Disclosure (Compliance) -->
             <div class="container affiliate-disclosure">
-                <p><em>Disclosure: As an Amazon Associate, Maple & Thyme earns from qualifying purchases. Some links on this page are affiliate links.</em></p>
+                <p><em>Disclosure: As an Amazon Associate, Maple & Thyme earns from qualifying purchases. Some links on
+                        this page are affiliate links.</em></p>
             </div>
 
             <!-- Latest Recipes Grid -->
@@ -83,7 +93,8 @@
 
                 <!-- Search & Filter Controls -->
                 <div class="controls-bar">
-                    <input type="text" id="recipe-search" class="control-input" placeholder="Search recipes by name or ingredient..." aria-label="Search recipes">
+                    <input type="text" id="recipe-search" class="control-input"
+                        placeholder="Search recipes by name or ingredient..." aria-label="Search recipes">
                     <select id="recipe-category" class="control-select" aria-label="Filter by category">
                         <option value="All">All Categories</option>
                         <option value="Canadian">Authentic Canadian</option>
@@ -119,13 +130,17 @@
 
                 <div class="recipe-grid">
                     <div class="recipe-image-container">
-                        <img id="recipe-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Recipe Image Placeholder" class="recipe-img skeleton">
+                        <img id="recipe-img"
+                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                            alt="Recipe Image Placeholder" class="recipe-img skeleton">
                     </div>
-                    
+
                     <div class="recipe-info">
                         <!-- Health Canada Disclaimer -->
                         <div class="health-disclaimer alert-warning" role="alert">
-                            <strong>Health & Allergy Warning:</strong> Nutritional information is estimated. Always check ingredient labels for allergens. This information does not substitute professional medical or dietary advice.
+                            <strong>Health & Allergy Warning:</strong> Nutritional information is estimated. Always
+                            check ingredient labels for allergens. This information does not substitute professional
+                            medical or dietary advice.
                         </div>
 
                         <!-- Sidebar Ad Placement -->
@@ -162,15 +177,18 @@
                     <h2>Get Fresh Canadian Recipes</h2>
                     <p>Join our mailing list to receive automated weekly recipe drops.</p>
                 </div>
-                <form action="https://formspree.io/f/mdawzjky" method="POST" id="newsletter-form" class="newsletter-form" aria-label="Newsletter Subscription">
+                <form action="https://formspree.io/f/mdawzjky" method="POST" id="newsletter-form"
+                    class="newsletter-form" aria-label="Newsletter Subscription">
                     <div class="input-group">
-                        <input type="email" name="email" id="email" required placeholder="Enter your email address" aria-label="Email address">
+                        <input type="email" name="email" id="email" required placeholder="Enter your email address"
+                            aria-label="Email address">
                         <button type="submit" class="btn btn-primary">Subscribe</button>
                     </div>
                     <div class="casl-checkbox">
                         <input type="checkbox" name="casl_consent" value="true" id="casl-consent" required>
                         <label for="casl-consent">
-                            I explicitly consent to receive commercial electronic messages (weekly recipes) from Maple & Thyme. I understand I can unsubscribe at any time. (CASL Requirement)
+                            I explicitly consent to receive commercial electronic messages (weekly recipes) from Maple &
+                            Thyme. I understand I can unsubscribe at any time. (CASL Requirement)
                         </label>
                     </div>
                     <div id="form-msg" class="form-msg hidden"></div>
@@ -184,7 +202,8 @@
         <div class="container footer-grid">
             <div class="footer-brand">
                 <h3>🍁 Maple & Thyme</h3>
-                <p>Curated automatically using the public TheMealDB API. Demonstrating compliance with Canadian web laws.</p>
+                <p>Curated automatically using the public TheMealDB API. Demonstrating compliance with Canadian web
+                    laws.</p>
             </div>
             <div class="footer-links">
                 <h4>Legal & Compliance</h4>
@@ -198,7 +217,7 @@
                 <h4>Contact & CASL Info</h4>
                 <address>
                     <strong>Business Address:</strong><br>
-                    [Placeholder Address]<br>
+                    <br>
                     Toronto, ON M5V 3L9<br>
                     Canada
                 </address>
@@ -213,4 +232,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
