@@ -170,7 +170,71 @@ a:hover {
     color: var(--color-primary);
 }
 
-/* Home View: Hero Section */
+/* --- ADVERTISEMENT PLACEHOLDERS --- */
+.ad-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.ad-label {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.ad-placeholder {
+    background: #f0f0f0;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 0.9rem;
+    font-family: monospace;
+}
+
+.ad-leaderboard {
+    width: 100%;
+    max-width: 728px;
+    height: 90px;
+}
+
+.ad-rectangle {
+    width: 300px;
+    height: 250px;
+    margin: 0 auto;
+}
+
+.ad-infeed {
+    grid-column: 1 / -1; /* spans full width of grid */
+}
+
+.affiliate-disclosure {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(0,0,0,0.02);
+    border-radius: var(--radius-md);
+}
+
+.affiliate-link {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+.affiliate-link:hover {
+    color: var(--color-pine);
+}
+
+/* ================= 5. HOME VIEW COMPONENTS ================= */
 .hero {
     position: relative;
     height: 70vh;

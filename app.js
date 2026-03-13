@@ -102,7 +102,22 @@ document.addEventListener('DOMContentLoaded', () => {
         
         grid.innerHTML = ''; // Clear skeletons
         
+        let counter = 0;
         meals.forEach(meal => {
+            // Inject a native ad card every 4 items
+            if (counter > 0 && counter % 4 === 0) {
+                const adCard = document.createElement('div');
+                adCard.className = 'ad-container ad-infeed';
+                adCard.innerHTML = `
+                    <span class="ad-label">Advertisement</span>
+                    <div class="ad-placeholder" style="width: 100%; height: 250px;">
+                        <!-- Google AdSense In-Feed Native Ad Goes Here -->
+                        [ Native Ad Placeholder ]
+                    </div>
+                `;
+                grid.appendChild(adCard);
+            }
+
             const card = document.createElement('article');
             card.className = 'recipe-card';
             card.innerHTML = `
@@ -118,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             grid.appendChild(card);
+            counter++;
         });
     }
 
@@ -148,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
             imgEl.alt = meal.strMeal;
             imgEl.classList.remove('skeleton');
 
-            // Populate Ingredients
+            // Populate Ingredients (with Affiliate Marketing simulation)
             ingList.innerHTML = '';
             for (let i = 1; i <= 20; i++) {
                 const ingredient = meal[`strIngredient${i}`];
@@ -156,7 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (ingredient && ingredient.trim() !== "") {
                     const li = document.createElement('li');
-                    li.textContent = `${measure.trim()} ${ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}`;
+                    const ingName = ingredient.charAt(0).toUpperCase() + ingredient.slice(1);
+                    
+                    // Simulate Affiliate linking: Wrap ingredient in a simulated Amazon link
+                    const affiliateLink = `https://www.amazon.ca/s?k=${encodeURIComponent(ingName)}&tag=mapleandthyme-20`;
+                    
+                    li.innerHTML = `${measure.trim()} <a href="${affiliateLink}" target="_blank" rel="noopener sponsored" class="affiliate-link">${ingName}</a>`;
                     ingList.appendChild(li);
                 }
             }
