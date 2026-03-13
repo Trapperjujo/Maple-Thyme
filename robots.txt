@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /data/
+Disallow: /scripts/
+
+Sitemap: https://mapleandthyme.blog/sitemap.xml

@@ -56,6 +56,32 @@ document.addEventListener('DOMContentLoaded', () => {
             // Render Home View
             if(homeView) homeView.classList.remove('hidden');
             if(recipeView) recipeView.classList.add('hidden');
+            
+            // Reset tags for homepage
+            document.title = "Maple & Thyme | Authentic Canadian Recipes";
+            
+            const metaDescription = "Discover automated, delicious Canadian recipes. Fully compliant with PIPEDA, CASL, and Health Canada guidelines.";
+            let descTag = document.querySelector('meta[name="description"]');
+            if(descTag) descTag.setAttribute("content", metaDescription);
+
+            let canonicalTag = document.getElementById('canonical-url');
+            if(canonicalTag) canonicalTag.setAttribute("href", "https://mapleandthyme.ca/");
+
+            let ogTitle = document.querySelector('meta[property="og:title"]');
+            if(ogTitle) ogTitle.setAttribute("content", "Maple & Thyme | Authentic Canadian Recipes");
+
+            let ogDesc = document.querySelector('meta[property="og:description"]');
+            if(ogDesc) ogDesc.setAttribute("content", metaDescription);
+
+            let ogUrl = document.querySelector('meta[property="og:url"]');
+            if(ogUrl) ogUrl.setAttribute("content", "https://mapleandthyme.ca/");
+
+            let ogImage = document.querySelector('meta[property="og:image"]');
+            if(ogImage) ogImage.setAttribute("content", "https://images.unsplash.com/photo-1549488344-c689fccc09ee?q=80&w=2070&auto=format&fit=crop");
+            
+            let schemaTag = document.getElementById('structured-data-dynamic');
+            if(schemaTag) schemaTag.textContent = "";
+
             await loadHomepage();
         }
     }
@@ -252,6 +278,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Populate Document
             document.title = `${meal.strMeal} | Maple & Thyme`;
+
+            // --- Dynamic SEO Meta Tags Update ---
+            const canonicalUrl = `https://mapleandthyme.ca/?id=${meal.idMeal}`;
+            const metaDescription = `Learn how to make authentic Canadian ${meal.strMeal}. Get the full recipe, ingredients, and step-by-step instructions.`;
+            
+            // Update Base Meta
+            let descTag = document.querySelector('meta[name="description"]');
+            if(descTag) descTag.setAttribute("content", metaDescription);
+
+            // Update Canonical
+            let canonicalTag = document.getElementById('canonical-url');
+            if(canonicalTag) canonicalTag.setAttribute("href", canonicalUrl);
+
+            // Update Open Graph Tags
+            let ogTitle = document.querySelector('meta[property="og:title"]');
+            if(ogTitle) ogTitle.setAttribute("content", `${meal.strMeal} | Maple & Thyme`);
+            
+            let ogDesc = document.querySelector('meta[property="og:description"]');
+            if(ogDesc) ogDesc.setAttribute("content", metaDescription);
+
+            let ogUrl = document.querySelector('meta[property="og:url"]');
+            if(ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+
+            let ogImage = document.querySelector('meta[property="og:image"]');
+            if(ogImage) {
+                ogImage.setAttribute("content", meal.strMealThumb);
+            }
+
+            // Update JSON-LD Schema (Recipe)
+            let schemaTag = document.getElementById('structured-data-dynamic');
+            if (schemaTag) {
+                // Determine ingredients array
+                let ingredients = [];
+                for (let i = 1; i <= 20; i++) {
+                    const ing = meal[`strIngredient${i}`];
+                    const meas = meal[`strMeasure${i}`];
+                    if (ing && ing.trim() !== "") {
+                        ingredients.push(`${meas.trim()} ${ing.trim()}`);
+                    }
+                }
+                
+                // Format instructions
+                let instructions = meal.strInstructions.split(/\r?\n/).filter(step => step.trim() !== "").map(step => {
+                    return { "@type": "HowToStep", "text": step.replace(/^\d+\.\s*\**\w*\**\s*/, "") }; // Clean up numbering if present for schema
+                });
+
+                const recipeSchema = {
+                    "@context": "https://schema.org/",
+                    "@type": "Recipe",
+                    "name": meal.strMeal,
+                    "image": [ meal.strMealThumb ],
+                    "author": {
+                        "@type": "Organization",
+                        "name": "Maple & Thyme"
+                    },
+                    "description": metaDescription,
+                    "recipeIngredient": ingredients,
+                    "recipeInstructions": instructions
+                };
+                schemaTag.textContent = JSON.stringify(recipeSchema, null, 2);
+            }
 
             const nameEl = document.getElementById('recipe-name');
             const imgEl = document.getElementById('recipe-img');

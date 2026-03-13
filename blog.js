@@ -38,6 +38,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (singleView) singleView.classList.add('hidden');
         document.title = "Blog | Maple & Thyme";
 
+        // Reset tags for blog index
+        const metaDescription = "Read our latest articles on Canadian ingredients, cooking techniques, and culinary history.";
+        let descTag = document.querySelector('meta[name="description"]');
+        if(descTag) descTag.setAttribute("content", metaDescription);
+
+        let canonicalTag = document.getElementById('canonical-url');
+        if(canonicalTag) canonicalTag.setAttribute("href", "https://mapleandthyme.ca/blog.html");
+
+        let ogTitle = document.querySelector('meta[property="og:title"]');
+        if(ogTitle) ogTitle.setAttribute("content", "Blog | Maple & Thyme");
+
+        let ogDesc = document.querySelector('meta[property="og:description"]');
+        if(ogDesc) ogDesc.setAttribute("content", metaDescription);
+
+        let ogUrl = document.querySelector('meta[property="og:url"]');
+        if(ogUrl) ogUrl.setAttribute("content", "https://mapleandthyme.ca/blog.html");
+
+        let ogImage = document.querySelector('meta[property="og:image"]');
+        if(ogImage) ogImage.setAttribute("content", "https://images.unsplash.com/photo-1549488344-c689fccc09ee?q=80&w=2070&auto=format&fit=crop");
+        
+        let schemaTag = document.getElementById('structured-data-dynamic');
+        if(schemaTag) schemaTag.textContent = "";
+
         const grid = document.getElementById('blog-grid');
         if (!grid) return;
 
@@ -73,6 +96,57 @@ document.addEventListener('DOMContentLoaded', () => {
         if (singleView) singleView.classList.remove('hidden');
         
         document.title = `${post.title} | Maple & Thyme`;
+
+        // --- Dynamic SEO Meta Tags Update ---
+        const canonicalUrl = `https://mapleandthyme.ca/blog.html?post=${post.id}`;
+        
+        // Update Base Meta
+        let descTag = document.querySelector('meta[name="description"]');
+        if(descTag) descTag.setAttribute("content", post.excerpt);
+
+        // Update Canonical
+        let canonicalTag = document.getElementById('canonical-url');
+        if(canonicalTag) canonicalTag.setAttribute("href", canonicalUrl);
+
+        // Update Open Graph Tags
+        let ogTitle = document.querySelector('meta[property="og:title"]');
+        if(ogTitle) ogTitle.setAttribute("content", `${post.title} | Maple & Thyme`);
+        
+        let ogDesc = document.querySelector('meta[property="og:description"]');
+        if(ogDesc) ogDesc.setAttribute("content", post.excerpt);
+
+        let ogUrl = document.querySelector('meta[property="og:url"]');
+        if(ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+
+        let ogImage = document.querySelector('meta[property="og:image"]');
+        if(ogImage) ogImage.setAttribute("content", post.image);
+
+        // Update JSON-LD Schema (Article)
+        let schemaTag = document.getElementById('structured-data-dynamic');
+        if (schemaTag) {
+            const dateStr = new Date(post.date).toISOString(); // Best effort ISO conversion from string
+            const articleSchema = {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": post.title,
+                "image": [ post.image ],
+                "datePublished": dateStr,
+                "author": [{
+                    "@type": "Person",
+                    "name": post.author
+                }],
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Maple & Thyme",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://mapleandthyme.ca/logo.png" 
+                    }
+                },
+                "description": post.excerpt
+            };
+            schemaTag.textContent = JSON.stringify(articleSchema, null, 2);
+        }
 
         // Hero
         const titleEl = document.getElementById('post-title');
