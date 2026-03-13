@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Setup Amazon Affiliate Auto-Linker
             const affiliateTag = "maplethyme-20";
             const keywords = [
-                "maple syrup", "butter tart", "baking sheet", "whisk", 
+                "maple syrup", "syrup", "butter tart", "baking sheet", "whisk", 
                 "mixing bowl", "dutch oven", "cast iron", "vanilla extract",
                 "whiskey", "dijon mustard", "measuring cups"
             ];
