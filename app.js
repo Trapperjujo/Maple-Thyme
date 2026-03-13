@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const li = document.createElement('li');
                     const ingName = ingredient.charAt(0).toUpperCase() + ingredient.slice(1);
                     
-                    // Simulate Affiliate linking: Wrap ingredient in a simulated Amazon link
-                    const affiliateLink = `https://www.amazon.ca/s?k=${encodeURIComponent(ingName)}&tag=mapleandthyme-20`;
+                    // Inject Official Affiliate linking: Wrap ingredient in a tracked Amazon search
+                    const affiliateLink = `https://www.amazon.ca/s?k=${encodeURIComponent(ingName)}&tag=maplethyme-20`;
                     
                     li.innerHTML = `${measure.trim()} <a href="${affiliateLink}" target="_blank" rel="noopener sponsored" class="affiliate-link">${ingName}</a>`;
                     ingList.appendChild(li);
