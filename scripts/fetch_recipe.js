@@ -4,6 +4,7 @@ const https = require('https');
 
 // Paths to our local DB
 const DB_PATH = path.join(__dirname, '..', 'data', 'recipes.json');
+const POSTS_DB_PATH = path.join(__dirname, '..', 'data', 'posts.json');
 
 // Fetch a random meal from API
 function fetchRandomMeal() {
@@ -85,6 +86,33 @@ async function main() {
         // Write the updated array back to our JSON file
         fs.writeFileSync(DB_PATH, JSON.stringify(dbData, null, 2), 'utf8');
         console.log(`Successfully added '${newMeal.strMeal}' with internal ID ${newMeal.idMeal} to recipes.json`);
+
+        // Create blog post entry
+        let postsData = { posts: [] };
+        if (fs.existsSync(POSTS_DB_PATH)) {
+            const rawPosts = fs.readFileSync(POSTS_DB_PATH, 'utf8');
+            postsData = JSON.parse(rawPosts);
+        }
+
+        const dateStr = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        
+        let instructionsHtml = newMeal.strInstructions || "No instructions provided.";
+        instructionsHtml = instructionsHtml.replace(/\n\s*\n/g, '<br><br>').replace(/\r\n/g, '<br>').replace(/\n/g, '<br>');
+
+        const newBlogPost = {
+            id: `b${newMeal.idMeal}`,
+            title: `Daily Recipe Drop: ${newMeal.strMeal}`,
+            date: dateStr,
+            author: "Maple & Thyme Bot",
+            image: newMeal.strMealThumb,
+            excerpt: `Discover how to make ${newMeal.strMeal}, fresh from our daily recipe drop!`,
+            content: `<p>Today's featured daily recipe is <strong>${newMeal.strMeal}</strong>!</p><br><h3>Instructions</h3><p>${instructionsHtml}</p>`
+        };
+
+        // Append and save the new blog post (put newest at beginning)
+        postsData.posts.unshift(newBlogPost);
+        fs.writeFileSync(POSTS_DB_PATH, JSON.stringify(postsData, null, 2), 'utf8');
+        console.log(`Successfully added blog post for '${newMeal.strMeal}' to posts.json`);
 
     } catch (error) {
         console.error("Failed to append daily post:", error);
